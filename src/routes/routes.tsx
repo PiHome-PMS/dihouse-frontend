@@ -1,10 +1,17 @@
 import { lazy } from 'react';
 import type { RouteObject } from 'react-router';
 
-// Lazy load pages
+// Lazy load from features
+const SettingsPage = lazy(() =>
+  import('@/features/settings').then((m) => ({ default: m.SettingsPage }))
+);
+const DashboardPage = lazy(() =>
+  import('@/features/dashboard').then((m) => ({ default: m.DashboardPage }))
+);
+
+// Lazy load pages (non-feature)
 const Home = lazy(() => import('@/pages/Home'));
 const Login = lazy(() => import('@/pages/Login'));
-const Dashboard = lazy(() => import('@/pages/Dashboard'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 import AuthLayout from '@/layouts/AuthLayout';
@@ -32,7 +39,10 @@ export const routes: RouteObject[] = [
         children: [
           {
             element: <DashboardLayout />,
-            children: [{ path: '/dashboard', element: <Dashboard /> }],
+            children: [
+              { path: '/dashboard', element: <DashboardPage /> },
+              { path: '/settings', element: <SettingsPage /> },
+            ],
           },
         ],
       },

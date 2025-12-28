@@ -10,9 +10,11 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "lint:staged": "biome check --staged --write --no-errors-on-unmatched",
+    "lint:imports": "bash scripts/check-feature-imports.sh",
     "format": "biome format --write .",
     "typecheck": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "create-feature": "bash scripts/create-feature.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

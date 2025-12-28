@@ -1,43 +1,16 @@
-import { Skeleton } from '@/components/ui';
 import { useProjects } from '@/hooks';
 import { useMemo } from 'react';
+import { StatCard, StatCardSkeleton } from '../components/StatCard';
+import type { DashboardStats } from '../types/dashboard.types';
 
 /**
- * Stats card component
+ * Dashboard page - shows project statistics
  */
-function StatCard({
-  label,
-  value,
-  color,
-}: { label: string; value: number | string; color?: string }) {
-  return (
-    <div className="rounded-lg border bg-card p-6">
-      <p className="text-sm text-muted-foreground">{label}</p>
-      <p className={`mt-2 text-3xl font-bold ${color ?? 'text-foreground'}`}>{value}</p>
-    </div>
-  );
-}
-
-/**
- * Skeleton loader for stat cards
- */
-function StatCardSkeleton() {
-  return (
-    <div className="rounded-lg border bg-card p-6">
-      <Skeleton className="h-4 w-20" />
-      <Skeleton className="mt-3 h-8 w-16" />
-    </div>
-  );
-}
-
-/**
- * Dashboard page - shows loading skeleton while fetching data
- */
-export default function Dashboard() {
+export function DashboardPage() {
   const { data: projects, isLoading } = useProjects({ page: 1, limit: 100 });
 
   // Calculate stats from projects with memoization
-  const stats = useMemo(
+  const stats: DashboardStats = useMemo(
     () => ({
       total: projects?.length ?? 0,
       inProgress: projects?.filter((p) => p.status === 'active').length ?? 0,

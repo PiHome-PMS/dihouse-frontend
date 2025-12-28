@@ -59,8 +59,22 @@ src/
 3. **Validations**: `zod` for schema-based validation in forms and API responses.
 4. **UI Primitives**: Radix UI (via Shadcn) for accessible components.
 
+## CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Build for production |
+| `pnpm lint` | Run linter |
+| `pnpm lint:imports` | Check for deep feature imports |
+| `pnpm typecheck` | TypeScript type check |
+| `pnpm create-feature <name>` | Scaffold new feature module |
+
 ## Recent Changes
 - Initial project setup with clean architecture.
 - Implemented RBAC system with `PermissionProvider`.
 - Setup typed API layer with automated interceptors.
 - Integrated Tailwind CSS 4 with `@tailwindcss/vite`.
+- **Migrated to feature-based architecture** - see [ARCHITECTURE.md](./ARCHITECTURE.md)
+- Added `pnpm create-feature` command for scaffolding
+
