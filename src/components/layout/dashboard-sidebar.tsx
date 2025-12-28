@@ -1,11 +1,12 @@
 import { Logo } from '@/components/common';
 import { Button } from '@/components/ui';
-import { ROUTES } from '@/config/constants';
+import { navigationConfig } from '@/config';
+import { useAuth } from '@/hooks';
 import { cn } from '@/lib/utils';
-import { ChevronLeft, LayoutDashboard } from 'lucide-react';
+import { filterNavByPermissions } from '@/utils';
+import { ChevronLeft } from 'lucide-react';
+import { useMemo } from 'react';
 import { NavLink } from 'react-router';
-
-const navItems = [{ label: 'Dashboard', to: ROUTES.DASHBOARD, icon: LayoutDashboard }];
 
 interface DashboardSidebarProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface DashboardSidebarProps {
 
 /**
  * Dashboard sidebar with navigation
+ * Uses centralized navigation config with RBAC filtering
  */
 export function DashboardSidebar({
   isOpen,
@@ -23,6 +25,11 @@ export function DashboardSidebar({
   onToggle,
   onMobileClose,
 }: DashboardSidebarProps) {
+  const { user } = useAuth();
+
+  // Filter nav items based on user permissions
+  const navItems = useMemo(() => filterNavByPermissions(navigationConfig, user), [user]);
+
   return (
     <aside
       className={cn(
@@ -49,22 +56,24 @@ export function DashboardSidebar({
       <nav className="p-2">
         <ul className="space-y-1">
           {navItems.map((item) => (
-            <li key={item.to}>
-              <NavLink
-                to={item.to}
-                onClick={onMobileClose}
-                className={({ isActive }) =>
-                  cn(
-                    'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                    isActive
-                      ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-                      : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
-                  )
-                }
-              >
-                <item.icon className="h-5 w-5 shrink-0" />
-                {isOpen && <span>{item.label}</span>}
-              </NavLink>
+            <li key={item.id}>
+              {item.path && (
+                <NavLink
+                  to={item.path}
+                  onClick={onMobileClose}
+                  className={({ isActive }) =>
+                    cn(
+                      'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                      isActive
+                        ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                    )
+                  }
+                >
+                  {item.icon && <item.icon className="h-5 w-5 shrink-0" />}
+                  {isOpen && <span>{item.label}</span>}
+                </NavLink>
+              )}
             </li>
           ))}
         </ul>

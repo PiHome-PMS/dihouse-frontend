@@ -6,3 +6,6 @@ export * from './auth.types';
 
 // Common types
 export * from './common.types';
+
+// Navigation types
+export * from './navigation.types';

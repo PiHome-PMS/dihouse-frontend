@@ -3,3 +3,6 @@ export { cn } from '@/lib/utils';
 
 // Date formatting
 export * from './format-date';
+
+// Navigation helpers
+export { filterNavByPermissions } from './filter-nav-by-permissions';
