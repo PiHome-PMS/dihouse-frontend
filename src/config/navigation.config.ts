@@ -41,9 +41,9 @@ export const navigationConfig: NavItem[] = [
     label: 'Quản lý dự án',
     icon: LayoutGrid,
     children: [
-      { id: 'project-list', label: 'Danh sách dự án', path: ROUTES.DASHBOARD },
-      { id: 'subdivisions', label: 'Danh sách phân khu', path: ROUTES.DASHBOARD },
-      { id: 'buildings', label: 'Danh sách tòa nhà', path: ROUTES.DASHBOARD },
+      { id: 'project-list', label: 'Danh sách dự án', path: ROUTES.PROJECT.LIST },
+      { id: 'subdivisions', label: 'Danh sách phân khu', path: ROUTES.PROJECT.BLOCK_LIST },
+      { id: 'buildings', label: 'Danh sách tòa nhà', path: ROUTES.PROJECT.BUILDING_LIST },
     ],
   },
   {

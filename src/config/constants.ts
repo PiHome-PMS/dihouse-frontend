@@ -21,6 +21,11 @@ export const ROUTES = {
     GROUP_DETAIL: (id: number | string) => `/permission/group/detail/${id}`,
     GROUP_INSERT: '/permission/group/insert',
   },
+  PROJECT: {
+    LIST: '/company/project',
+    BLOCK_LIST: '/company/block',
+    BUILDING_LIST: '/company/building',
+  },
 } as const;
 
 // Storage keys (for future use with cookies)
