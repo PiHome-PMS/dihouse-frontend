@@ -34,7 +34,7 @@ export const navigationConfig: NavItem[] = [
     id: 'permissions',
     label: 'Quản Lý Quyền',
     icon: ShieldCheck,
-    children: [{ id: 'permission-groups', label: 'Nhóm quyền', path: ROUTES.DASHBOARD }],
+    children: [{ id: 'permission-groups', label: 'Nhóm quyền', path: ROUTES.PERMISSION.GROUPS }],
   },
   {
     id: 'projects',

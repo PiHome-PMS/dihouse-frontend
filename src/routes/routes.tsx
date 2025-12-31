@@ -32,6 +32,17 @@ const UsageDataListPage = lazy(() =>
   import('@/features/company').then((m) => ({ default: m.UsageDataListPage }))
 );
 
+// Permission feature - using barrel exports
+const PermissionGroupListPage = lazy(() =>
+  import('@/features/permission').then((m) => ({ default: m.PermissionGroupListPage }))
+);
+const PermissionGroupDetailPage = lazy(() =>
+  import('@/features/permission').then((m) => ({ default: m.PermissionGroupDetailPage }))
+);
+const PermissionGroupInsertPage = lazy(() =>
+  import('@/features/permission').then((m) => ({ default: m.PermissionGroupInsertPage }))
+);
+
 // Lazy load pages (non-feature)
 const Home = lazy(() => import('@/pages/Home'));
 const Login = lazy(() => import('@/pages/Login'));
@@ -71,6 +82,9 @@ export const routes: RouteObject[] = [
               { path: '/company/unit/detail/:id', element: <UnitDetailPage /> },
               { path: '/company/unit/insert', element: <UnitInsertPage /> },
               { path: '/company/usage-data', element: <UsageDataListPage /> },
+              { path: '/permission/groups', element: <PermissionGroupListPage /> },
+              { path: '/permission/group/detail/:id', element: <PermissionGroupDetailPage /> },
+              { path: '/permission/group/insert', element: <PermissionGroupInsertPage /> },
               { path: '/settings', element: <SettingsPage /> },
             ],
           },
