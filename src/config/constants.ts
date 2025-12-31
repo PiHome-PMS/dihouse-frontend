@@ -16,6 +16,11 @@ export const ROUTES = {
     UNIT_INSERT: '/company/unit/insert',
     USAGE_DATA: '/company/usage-data',
   },
+  PERMISSION: {
+    GROUPS: '/permission/groups',
+    GROUP_DETAIL: (id: number | string) => `/permission/group/detail/${id}`,
+    GROUP_INSERT: '/permission/group/insert',
+  },
 } as const;
 
 // Storage keys (for future use with cookies)
