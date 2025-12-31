@@ -4,79 +4,62 @@ import {
   FilterSelect,
   PageHeader,
   Pagination,
-  SearchInput,
 } from '@/components/common';
 import { Button, Card, Input } from '@/components/ui';
-import { cn } from '@/lib/utils';
-import { RotateCcw, Search } from 'lucide-react';
+import { Calendar, Download, History, RotateCcw, Search } from 'lucide-react';
 import { useState } from 'react';
-import type { AttendanceRecord } from '../types/hr.types';
+
+interface AttendanceLog {
+  id: number;
+  fullName: string;
+  employeeCode: string;
+  department: string;
+  date: string;
+  time: string;
+  device: string;
+}
 
 export function AttendanceHistoryPage() {
-  const [search, setSearch] = useState('');
-  const [dateFrom, setDateFrom] = useState('');
-  const [dateTo, setDateTo] = useState('');
+  const [departmentFilter, setDepartmentFilter] = useState('');
+  const [divisionFilter, setDivisionFilter] = useState('');
+  const [employeeFilter, setEmployeeFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [dateRange, setDateRange] = useState('');
 
-  // Mock data
-  const records: AttendanceRecord[] = [
-    {
-      id: 1,
-      employeeCode: 'NV001',
-      employeeName: 'Nguyễn Văn A',
-      date: '30/12/2025',
-      checkIn: '08:05',
-      checkOut: '17:30',
-      totalHours: 8.5,
-      status: 'present',
-    },
-    {
-      id: 2,
-      employeeCode: 'NV002',
-      employeeName: 'Trần Thị B',
-      date: '30/12/2025',
-      checkIn: '08:45',
-      checkOut: '17:00',
-      totalHours: 7.5,
-      status: 'late',
-    },
-    {
-      id: 3,
-      employeeCode: 'NV003',
-      employeeName: 'Lê Văn C',
-      date: '30/12/2025',
-      checkIn: '-',
-      checkOut: '-',
-      totalHours: 0,
-      status: 'absent',
-    },
+  // Mock data matching BDC
+  const records: AttendanceLog[] = [
+    { id: 1, fullName: 'Huyền Thương', employeeCode: 'HPU02', department: '', date: '25/10/2025', time: '08:57:56', device: '' },
+    { id: 2, fullName: 'Nhân sự Demo chấm công', employeeCode: '', department: 'Nhân sự Demo chấm công', date: '25/08/2025', time: '11:53:25', device: '' },
+    { id: 3, fullName: 'Nhân sự Demo chấm công', employeeCode: '', department: 'Nhân sự Demo chấm công', date: '25/08/2025', time: '11:51:22', device: '' },
+    { id: 4, fullName: 'Nhân sự Demo chấm công', employeeCode: '', department: 'Nhân sự Demo chấm công', date: '23/08/2025', time: '11:30:35', device: 'Thiết bị chấm vân tay' },
+    { id: 5, fullName: 'Nhân sự Demo chấm công', employeeCode: '', department: 'Nhân sự Demo chấm công', date: '23/08/2025', time: '22:27:40', device: 'Thiết bị chấm vân tay' },
+    { id: 6, fullName: 'Nhân sự Demo chấm công', employeeCode: '', department: 'Nhân sự Demo chấm công', date: '23/08/2025', time: '12:35:13', device: 'Thiết bị chấm vân tay' },
+    { id: 7, fullName: 'Nhân sự Demo chấm công', employeeCode: '', department: 'Nhân sự Demo chấm công', date: '23/08/2025', time: '08:44:37', device: 'Thiết bị chấm vân tay' },
+    { id: 8, fullName: 'Nhân sự Demo chấm công', employeeCode: '', department: 'Nhân sự Demo chấm công', date: '22/08/2025', time: '17:25:36', device: 'Thiết bị chấm vân tay' },
+    { id: 9, fullName: 'Nhân sự Demo chấm công', employeeCode: '', department: 'Nhân sự Demo chấm công', date: '22/08/2025', time: '08:53:34', device: 'Thiết bị chấm vân tay' },
+    { id: 10, fullName: 'Nhân sự Demo chấm công', employeeCode: '', department: 'Nhân sự Demo chấm công', date: '21/08/2025', time: '17:30:42', device: '' },
+    { id: 11, fullName: 'Khách hàng Test VP', employeeCode: '', department: 'Khách hàng Test VP', date: '21/08/2025', time: '08:30:23', device: '' },
+    { id: 12, fullName: 'Đoàn Đắc Hậu', employeeCode: 'HPU08', department: '', date: '21/08/2025', time: '08:35:31', device: '' },
+    { id: 13, fullName: 'Nhân sự Demo chấm công', employeeCode: '', department: 'Nhân sự Demo chấm công', date: '21/08/2025', time: '08:30:48', device: '' },
+    { id: 14, fullName: 'Khách hàng Admin Test', employeeCode: '', department: 'Khách hàng Admin Test', date: '21/08/2025', time: '08:28:32', device: '' },
+    { id: 15, fullName: 'Triều Thực', employeeCode: 'TTT1', department: '', date: '21/08/2025', time: '08:26:31', device: '' },
   ];
 
-  const getStatusBadge = (status: AttendanceRecord['status']) => {
-    const styles = {
-      present: 'bg-green-100 text-green-700',
-      late: 'bg-yellow-100 text-yellow-700',
-      early: 'bg-orange-100 text-orange-700',
-      absent: 'bg-red-100 text-red-700',
-    };
-    const labels = { present: 'Có mặt', late: 'Đi muộn', early: 'Về sớm', absent: 'Vắng mặt' };
-    return (
-      <span className={cn('px-2 py-1 rounded-md text-xs font-medium', styles[status])}>
-        {labels[status]}
-      </span>
-    );
-  };
-
-  const columns: DataTableColumn<AttendanceRecord>[] = [
+  const columns: DataTableColumn<AttendanceLog>[] = [
+    {
+      key: 'fullName',
+      header: 'Họ và Tên',
+      render: (r) => <span className="text-xs font-medium text-gray-700">{r.fullName}</span>,
+    },
     {
       key: 'employeeCode',
       header: 'Mã NV',
-      render: (r) => <span className="text-xs font-semibold text-blue-500">{r.employeeCode}</span>,
+      render: (r) => <span className="text-xs text-blue-500 font-medium">{r.employeeCode}</span>,
     },
     {
-      key: 'employeeName',
-      header: 'Tên nhân viên',
-      render: (r) => <span className="text-xs font-bold text-gray-700">{r.employeeName}</span>,
+      key: 'department',
+      header: 'Phòng ban',
+      render: (r) => <span className="text-xs text-gray-600">{r.department}</span>,
     },
     {
       key: 'date',
@@ -84,95 +67,126 @@ export function AttendanceHistoryPage() {
       render: (r) => <span className="text-xs text-gray-600">{r.date}</span>,
     },
     {
-      key: 'checkIn',
-      header: 'Giờ vào',
-      render: (r) => <span className="text-xs text-gray-600">{r.checkIn}</span>,
+      key: 'time',
+      header: 'Giờ',
+      render: (r) => <span className="text-xs text-gray-600">{r.time}</span>,
     },
     {
-      key: 'checkOut',
-      header: 'Giờ ra',
-      render: (r) => <span className="text-xs text-gray-600">{r.checkOut}</span>,
+      key: 'device',
+      header: 'Thiết bị chấm công',
+      render: (r) => <span className="text-xs text-gray-600">{r.device}</span>,
     },
-    {
-      key: 'totalHours',
-      header: 'Tổng giờ',
-      render: (r) => <span className="text-xs text-gray-600">{r.totalHours}h</span>,
-    },
-    {
-      key: 'status',
-      header: 'Trạng thái',
-      align: 'center',
-      render: (r) => getStatusBadge(r.status),
-    },
+  ];
+
+  const departmentOptions = [
+    { value: 'nhansu', label: 'Nhân sự Demo chấm công' },
+    { value: 'khachhang', label: 'Khách hàng Test VP' },
+    { value: 'admin', label: 'Khách hàng Admin Test' },
+  ];
+
+  const divisionOptions = [
+    { value: 'bp1', label: 'Bộ phận 1' },
+    { value: 'bp2', label: 'Bộ phận 2' },
+  ];
+
+  const employeeOptions = [
+    { value: 'all', label: 'Tất cả nhân viên' },
+    { value: 'hpu02', label: 'Huyền Thương' },
+    { value: 'ttt1', label: 'Triều Thực' },
   ];
 
   const statusOptions = [
-    { value: 'present', label: 'Có mặt' },
-    { value: 'late', label: 'Đi muộn' },
-    { value: 'absent', label: 'Vắng mặt' },
+    { value: 'all', label: 'Tất cả trạng thái' },
+    { value: 'in', label: 'Chấm vào' },
+    { value: 'out', label: 'Chấm ra' },
   ];
 
   const handleResetFilters = () => {
-    setSearch('');
-    setDateFrom('');
-    setDateTo('');
+    setDepartmentFilter('');
+    setDivisionFilter('');
+    setEmployeeFilter('');
     setStatusFilter('');
+    setDateRange('');
   };
 
   return (
     <div className="p-4 space-y-4">
       <PageHeader title="Lịch sử chấm công" breadcrumb={['Quản Lý Nhân Sự', 'Lịch sử chấm công']} />
 
-      <Card className="p-4 border-none shadow-[0_1px_3px_rgba(0,0,0,0.1)] rounded-[3px] bg-white">
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex-1 min-w-[200px]">
-            <SearchInput value={search} onChange={setSearch} placeholder="Tìm kiếm theo tên, mã" />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Input
-              type="date"
-              value={dateFrom}
-              onChange={(e) => setDateFrom(e.target.value)}
-              className="h-9 w-40 rounded-[3px]"
-            />
-            <span className="text-gray-500">-</span>
-            <Input
-              type="date"
-              value={dateTo}
-              onChange={(e) => setDateTo(e.target.value)}
-              className="h-9 w-40 rounded-[3px]"
-            />
-          </div>
-
+      <Card className="p-4 border-none shadow-[0_1px_3px_rgba(0,0,0,0.1)] rounded-[3px] bg-white space-y-4">
+        {/* Row 1: 4 dropdown filters */}
+        <div className="grid grid-cols-4 gap-4">
+          <FilterSelect
+            value={departmentFilter}
+            onChange={setDepartmentFilter}
+            options={departmentOptions}
+            placeholder="Phòng ban"
+          />
+          <FilterSelect
+            value={divisionFilter}
+            onChange={setDivisionFilter}
+            options={divisionOptions}
+            placeholder="Bộ phận"
+          />
+          <FilterSelect
+            value={employeeFilter}
+            onChange={setEmployeeFilter}
+            options={employeeOptions}
+            placeholder="Nhân viên"
+          />
           <FilterSelect
             value={statusFilter}
             onChange={setStatusFilter}
             options={statusOptions}
             placeholder="Trạng thái"
-            className="w-36"
           />
+        </div>
 
-          <div className="flex items-center gap-2">
+        {/* Row 2: Date range and action buttons */}
+        <div className="flex items-center gap-4">
+          <div className="relative w-64">
+            <Input
+              type="text"
+              value={dateRange}
+              onChange={(e) => setDateRange(e.target.value)}
+              placeholder="Chọn khoảng thời gian"
+              className="h-10 rounded-[3px] pr-10"
+            />
+            <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          </div>
+
+          <div className="flex items-center gap-2 ml-auto">
             <Button
               variant="outline"
               onClick={handleResetFilters}
-              className="h-9 gap-2 px-4 text-sm font-semibold border-gray-200 text-gray-600 hover:bg-gray-50 rounded-[3px]"
+              className="h-9 gap-2 px-4 text-sm font-medium border-gray-200 text-gray-600 hover:bg-gray-50 rounded-[3px]"
             >
               <RotateCcw className="h-4 w-4" />
               Làm mới bộ lọc
             </Button>
-            <Button className="h-9 gap-2 px-4 text-sm font-semibold bg-primary hover:bg-primary/90 text-white rounded-[3px]">
+            <Button className="h-9 gap-2 px-4 text-sm font-medium bg-primary hover:bg-primary/90 text-white rounded-[3px]">
               <Search className="h-4 w-4" />
               Tìm kiếm
             </Button>
           </div>
         </div>
+
+        {/* Row 3: Export buttons */}
+        <div className="flex items-center gap-2">
+          <Button className="h-9 gap-2 px-4 text-sm font-medium bg-green-600 hover:bg-green-700 text-white rounded-[3px]">
+            <Download className="h-4 w-4" />
+            Export lịch sử chấm công
+          </Button>
+          <Button className="h-9 gap-2 px-4 text-sm font-medium bg-green-600 hover:bg-green-700 text-white rounded-[3px]">
+            <History className="h-4 w-4" />
+            Lịch sử export lịch sử chấm công
+          </Button>
+        </div>
       </Card>
 
       <Card className="overflow-hidden border-none shadow-[0_1px_3px_rgba(0,0,0,0.1)] rounded-[3px] bg-white">
         <DataTable columns={columns} data={records} keyExtractor={(r) => r.id} minWidth="900px" />
-        <Pagination currentPage={1} totalPages={1} totalRecords={records.length} pageSize={20} />
+        <Pagination currentPage={1} totalPages={5} totalRecords={records.length} pageSize={20} />
       </Card>
     </div>
   );

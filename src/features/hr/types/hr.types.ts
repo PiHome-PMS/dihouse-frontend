@@ -88,6 +88,9 @@ export interface MonthlyEvaluation {
   workDays: number;
   absentDays: number;
   lateDays: number;
+  selfScore?: number;
+  selfRating?: 'A' | 'B' | 'C' | 'D';
+  approverName?: string;
   score: number;
   rating: 'A' | 'B' | 'C' | 'D';
 }

@@ -10,7 +10,7 @@ import {
 } from '@/components/common';
 import { Button, Card } from '@/components/ui';
 import { ROUTES } from '@/config/constants';
-import { Download, FileUp, Plus, RefreshCw, RotateCcw, Search, User } from 'lucide-react';
+import { Download, FileUp, History, Plus, RefreshCw, RotateCcw, Search, User } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { EmployeeModal } from '../components';
@@ -20,6 +20,7 @@ export function EmployeeListPage() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState('');
+  const [sectionFilter, setSectionFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>();
   const [modalOpen, setModalOpen] = useState(false);
@@ -72,6 +73,7 @@ export function EmployeeListPage() {
       updatedAt: '15/09/2025',
     },
   ];
+
 
   const columns: DataTableColumn<Employee>[] = [
     {
@@ -160,6 +162,13 @@ export function EmployeeListPage() {
     { value: 'accounting', label: 'Phòng Kế toán' },
   ];
 
+  const sectionOptions = [
+    { value: 'backend', label: 'Backend' },
+    { value: 'frontend', label: 'Frontend' },
+    { value: 'tuyendung', label: 'Tuyển dụng' },
+    { value: 'ketoan', label: 'Kế toán tổng hợp' },
+  ];
+
   const statusOptions = [
     { value: 'active', label: 'Đang làm việc' },
     { value: 'inactive', label: 'Nghỉ việc' },
@@ -168,6 +177,7 @@ export function EmployeeListPage() {
   const handleResetFilters = () => {
     setSearch('');
     setDepartmentFilter('');
+    setSectionFilter('');
     setStatusFilter('');
   };
 
@@ -186,6 +196,14 @@ export function EmployeeListPage() {
             onChange={setDepartmentFilter}
             options={departmentOptions}
             placeholder="Phòng ban"
+            className="w-40"
+          />
+
+          <FilterSelect
+            value={sectionFilter}
+            onChange={setSectionFilter}
+            options={sectionOptions}
+            placeholder="Bộ phận"
             className="w-40"
           />
 
@@ -226,6 +244,13 @@ export function EmployeeListPage() {
             >
               <Download className="h-4 w-4" />
               Export
+            </Button>
+            <Button
+              variant="outline"
+              className="h-9 gap-2 px-4 text-sm font-semibold border-gray-200 text-gray-600 hover:bg-gray-50 rounded-[3px]"
+            >
+              <History className="h-4 w-4" />
+              Lịch sử Import/Export
             </Button>
             <Button
               onClick={() => {
