@@ -26,8 +26,8 @@ export const navigationConfig: NavItem[] = [
     icon: Network,
     children: [
       { id: 'departments', label: 'Danh sách phòng ban', path: ROUTES.COMPANY.DEPARTMENTS },
-      { id: 'units', label: 'Danh sách bộ phận', path: ROUTES.DASHBOARD },
-      { id: 'usage-data', label: 'Dữ liệu sử dụng', path: ROUTES.DASHBOARD },
+      { id: 'units', label: 'Danh sách bộ phận', path: ROUTES.COMPANY.UNITS },
+      { id: 'usage-data', label: 'Dữ liệu sử dụng', path: ROUTES.COMPANY.USAGE_DATA },
     ],
   },
   {

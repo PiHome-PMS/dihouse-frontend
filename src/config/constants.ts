@@ -9,6 +9,12 @@ export const ROUTES = {
   DASHBOARD: '/dashboard',
   COMPANY: {
     DEPARTMENTS: '/company/departments',
+    DEPARTMENT_DETAIL: (id: number | string) => `/company/department/detail/${id}`,
+    DEPARTMENT_INSERT: '/company/department/insert',
+    UNITS: '/company/units',
+    UNIT_DETAIL: (id: number | string) => `/company/unit/detail/${id}`,
+    UNIT_INSERT: '/company/unit/insert',
+    USAGE_DATA: '/company/usage-data',
   },
 } as const;
 
