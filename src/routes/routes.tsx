@@ -43,6 +43,17 @@ const PermissionGroupInsertPage = lazy(() =>
   import('@/features/permission').then((m) => ({ default: m.PermissionGroupInsertPage }))
 );
 
+// Project feature - using barrel exports
+const ProjectListPage = lazy(() =>
+  import('@/features/project').then((m) => ({ default: m.ProjectListPage }))
+);
+const BlockListPage = lazy(() =>
+  import('@/features/project').then((m) => ({ default: m.BlockListPage }))
+);
+const BuildingListPage = lazy(() =>
+  import('@/features/project').then((m) => ({ default: m.BuildingListPage }))
+);
+
 // Lazy load pages (non-feature)
 const Home = lazy(() => import('@/pages/Home'));
 const Login = lazy(() => import('@/pages/Login'));
@@ -85,6 +96,9 @@ export const routes: RouteObject[] = [
               { path: '/permission/groups', element: <PermissionGroupListPage /> },
               { path: '/permission/group/detail/:id', element: <PermissionGroupDetailPage /> },
               { path: '/permission/group/insert', element: <PermissionGroupInsertPage /> },
+              { path: '/company/project', element: <ProjectListPage /> },
+              { path: '/company/block', element: <BlockListPage /> },
+              { path: '/company/building', element: <BuildingListPage /> },
               { path: '/settings', element: <SettingsPage /> },
             ],
           },
