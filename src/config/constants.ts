@@ -26,6 +26,17 @@ export const ROUTES = {
     BLOCK_LIST: '/company/block',
     BUILDING_LIST: '/company/building',
   },
+  HR: {
+    TIMEKEEPING_CONFIG: '/hr/timekeeping-config',
+    DEVICE_LIST: '/hr/devices',
+    POSITION_LIST: '/hr/positions',
+    SHIFT_LIST: '/hr/shifts',
+    EMPLOYEE_LIST: '/hr/employees',
+    EMPLOYEE_DETAIL: (id: number | string) => `/hr/employee/detail/${id}`,
+    ATTENDANCE_HISTORY: '/hr/attendance-history',
+    ATTENDANCE_MANAGEMENT: '/hr/attendance-management',
+    MONTHLY_EVALUATION: '/hr/monthly-evaluation',
+  },
 } as const;
 
 // Storage keys (for future use with cookies)
