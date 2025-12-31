@@ -54,6 +54,35 @@ const BuildingListPage = lazy(() =>
   import('@/features/project').then((m) => ({ default: m.BuildingListPage }))
 );
 
+// HR feature - using barrel exports
+const TimekeepingConfigPage = lazy(() =>
+  import('@/features/hr').then((m) => ({ default: m.TimekeepingConfigPage }))
+);
+const DeviceListPage = lazy(() =>
+  import('@/features/hr').then((m) => ({ default: m.DeviceListPage }))
+);
+const PositionListPage = lazy(() =>
+  import('@/features/hr').then((m) => ({ default: m.PositionListPage }))
+);
+const ShiftListPage = lazy(() =>
+  import('@/features/hr').then((m) => ({ default: m.ShiftListPage }))
+);
+const EmployeeListPage = lazy(() =>
+  import('@/features/hr').then((m) => ({ default: m.EmployeeListPage }))
+);
+const EmployeeDetailPage = lazy(() =>
+  import('@/features/hr').then((m) => ({ default: m.EmployeeDetailPage }))
+);
+const AttendanceHistoryPage = lazy(() =>
+  import('@/features/hr').then((m) => ({ default: m.AttendanceHistoryPage }))
+);
+const AttendanceManagementPage = lazy(() =>
+  import('@/features/hr').then((m) => ({ default: m.AttendanceManagementPage }))
+);
+const MonthlyEvaluationPage = lazy(() =>
+  import('@/features/hr').then((m) => ({ default: m.MonthlyEvaluationPage }))
+);
+
 // Lazy load pages (non-feature)
 const Home = lazy(() => import('@/pages/Home'));
 const Login = lazy(() => import('@/pages/Login'));
@@ -99,6 +128,15 @@ export const routes: RouteObject[] = [
               { path: '/company/project', element: <ProjectListPage /> },
               { path: '/company/block', element: <BlockListPage /> },
               { path: '/company/building', element: <BuildingListPage /> },
+              { path: '/hr/timekeeping-config', element: <TimekeepingConfigPage /> },
+              { path: '/hr/devices', element: <DeviceListPage /> },
+              { path: '/hr/positions', element: <PositionListPage /> },
+              { path: '/hr/shifts', element: <ShiftListPage /> },
+              { path: '/hr/employees', element: <EmployeeListPage /> },
+              { path: '/hr/employee/detail/:id', element: <EmployeeDetailPage /> },
+              { path: '/hr/attendance-history', element: <AttendanceHistoryPage /> },
+              { path: '/hr/attendance-management', element: <AttendanceManagementPage /> },
+              { path: '/hr/monthly-evaluation', element: <MonthlyEvaluationPage /> },
               { path: '/settings', element: <SettingsPage /> },
             ],
           },
