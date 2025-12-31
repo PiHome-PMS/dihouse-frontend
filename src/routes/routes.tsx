@@ -8,10 +8,28 @@ const SettingsPage = lazy(() =>
 const DashboardPage = lazy(() =>
   import('@/features/dashboard').then((m) => ({ default: m.DashboardPage }))
 );
+
+// Company feature - using barrel exports
 const DepartmentListPage = lazy(() =>
-  import('@/features/company/pages/DepartmentListPage').then((m) => ({
-    default: m.DepartmentListPage,
-  }))
+  import('@/features/company').then((m) => ({ default: m.DepartmentListPage }))
+);
+const DepartmentDetailPage = lazy(() =>
+  import('@/features/company').then((m) => ({ default: m.DepartmentDetailPage }))
+);
+const DepartmentInsertPage = lazy(() =>
+  import('@/features/company').then((m) => ({ default: m.DepartmentInsertPage }))
+);
+const UnitListPage = lazy(() =>
+  import('@/features/company').then((m) => ({ default: m.UnitListPage }))
+);
+const UnitDetailPage = lazy(() =>
+  import('@/features/company').then((m) => ({ default: m.UnitDetailPage }))
+);
+const UnitInsertPage = lazy(() =>
+  import('@/features/company').then((m) => ({ default: m.UnitInsertPage }))
+);
+const UsageDataListPage = lazy(() =>
+  import('@/features/company').then((m) => ({ default: m.UsageDataListPage }))
 );
 
 // Lazy load pages (non-feature)
@@ -47,6 +65,12 @@ export const routes: RouteObject[] = [
             children: [
               { path: '/dashboard', element: <DashboardPage /> },
               { path: '/company/departments', element: <DepartmentListPage /> },
+              { path: '/company/department/detail/:id', element: <DepartmentDetailPage /> },
+              { path: '/company/department/insert', element: <DepartmentInsertPage /> },
+              { path: '/company/units', element: <UnitListPage /> },
+              { path: '/company/unit/detail/:id', element: <UnitDetailPage /> },
+              { path: '/company/unit/insert', element: <UnitInsertPage /> },
+              { path: '/company/usage-data', element: <UsageDataListPage /> },
               { path: '/settings', element: <SettingsPage /> },
             ],
           },
