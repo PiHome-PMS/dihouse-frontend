@@ -22,12 +22,14 @@ const TABS: { id: TabId; label: string }[] = [
   { id: 'permissions', label: 'Phân quyền' },
 ];
 
+type EmployeeFormData = Record<string, string | boolean | number | undefined>;
+
 export function EmployeeDetailPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabId>('general');
 
   // Form data - shared across tabs
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<EmployeeFormData>({
     // Personal info
     code: 'NV001',
     oldCode: '',
@@ -51,7 +53,6 @@ export function EmployeeDetailPage() {
     // Work info
     timekeepingCode: 'CC001',
     entryDate: '2020-01-01',
-    shifts: [],
     decisionDate: '',
     decisionNumber: '',
     level: '',
@@ -78,6 +79,7 @@ export function EmployeeDetailPage() {
     education: '',
     major: '',
     foreignLanguage: '',
+
     computerSkill: '',
     internalEmail: '',
   });
@@ -120,10 +122,11 @@ export function EmployeeDetailPage() {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 text-sm font-medium transition-colors ${activeTab === tab.id
+              className={`px-6 py-3 text-sm font-medium transition-colors ${
+                activeTab === tab.id
                   ? 'text-primary border-b-2 border-primary bg-primary/5'
                   : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                }`}
+              }`}
             >
               {tab.label}
             </button>

@@ -1,9 +1,4 @@
-import {
-  DataTable,
-  type DataTableColumn,
-  PageHeader,
-  Pagination,
-} from '@/components/common';
+import { DataTable, type DataTableColumn, PageHeader, Pagination } from '@/components/common';
 import { Button, Card } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { Download } from 'lucide-react';
@@ -45,18 +40,25 @@ export function MonthlyEvaluationPage() {
     {
       key: 'selfScore',
       header: 'Điểm (Tự đánh giá)',
-      render: (e: any) => <span className="text-xs font-semibold text-gray-700">{e.selfScore || '-'}</span>,
+      render: (e) => (
+        <span className="text-xs font-semibold text-gray-700">{e.selfScore || '-'}</span>
+      ),
     },
     {
       key: 'selfRating',
       header: 'Xếp hạng (Tự đánh giá)',
       align: 'center',
-      render: (e: any) => e.selfRating ? getRatingBadge(e.selfRating) : <span className="text-xs text-gray-400">-</span>,
+      render: (e) =>
+        e.selfRating ? (
+          getRatingBadge(e.selfRating)
+        ) : (
+          <span className="text-xs text-gray-400">-</span>
+        ),
     },
     {
       key: 'approverName',
       header: 'Người duyệt',
-      render: (e: any) => <span className="text-xs text-gray-600">{e.approverName || '-'}</span>,
+      render: (e) => <span className="text-xs text-gray-600">{e.approverName || '-'}</span>,
     },
     {
       key: 'score',

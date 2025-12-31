@@ -74,7 +74,6 @@ export function EmployeeListPage() {
     },
   ];
 
-
   const columns: DataTableColumn<Employee>[] = [
     {
       key: 'code',
