@@ -5,6 +5,9 @@ import type { RouteObject } from 'react-router';
 const SettingsPage = lazy(() =>
   import('@/features/settings').then((m) => ({ default: m.SettingsPage }))
 );
+const MenuAppPage = lazy(() =>
+  import('@/features/settings').then((m) => ({ default: m.MenuAppPage }))
+);
 const DashboardPage = lazy(() =>
   import('@/features/dashboard').then((m) => ({ default: m.DashboardPage }))
 );
@@ -138,6 +141,7 @@ export const routes: RouteObject[] = [
               { path: '/hr/attendance-management', element: <AttendanceManagementPage /> },
               { path: '/hr/monthly-evaluation', element: <MonthlyEvaluationPage /> },
               { path: '/settings', element: <SettingsPage /> },
+              { path: '/settings/menu-app', element: <MenuAppPage /> },
             ],
           },
         ],

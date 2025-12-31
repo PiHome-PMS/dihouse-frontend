@@ -2,6 +2,7 @@
 
 // Pages
 export { SettingsPage } from './pages/SettingsPage';
+export { MenuAppPage } from './pages/MenuAppPage';
 
 // Components
 // export { SettingsComponent } from './components/SettingsComponent';

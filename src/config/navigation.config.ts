@@ -72,8 +72,10 @@ export const navigationConfig: NavItem[] = [
   {
     id: 'setup',
     label: 'Thiết lập',
-    icon: Grid2X2,
-    children: [{ id: 'resident-app-menu', label: 'Menu app cư dân', path: ROUTES.DASHBOARD }],
+    icon: Settings,
+    children: [
+      { id: 'resident-app-menu', label: 'Menu app cư dân', path: ROUTES.SETTINGS.MENU_APP },
+    ],
   },
   {
     id: 'approvals',
