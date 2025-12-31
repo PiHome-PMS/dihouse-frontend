@@ -37,6 +37,9 @@ export const ROUTES = {
     ATTENDANCE_MANAGEMENT: '/hr/attendance-management',
     MONTHLY_EVALUATION: '/hr/monthly-evaluation',
   },
+  SETUP: {
+    MENU_APP: '/setup/menu-app',
+  },
 } as const;
 
 // Storage keys (for future use with cookies)

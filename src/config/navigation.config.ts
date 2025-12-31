@@ -72,8 +72,14 @@ export const navigationConfig: NavItem[] = [
   {
     id: 'setup',
     label: 'Thiết lập',
-    icon: Grid2X2,
-    children: [{ id: 'resident-app-menu', label: 'Menu app cư dân', path: ROUTES.DASHBOARD }],
+    icon: Settings,
+    children: [{ id: 'resident-app-menu', label: 'Menu app cư dân', path: ROUTES.SETUP.MENU_APP }],
+  },
+  {
+    id: 'settings',
+    label: 'Cài đặt',
+    icon: Settings,
+    children: [{ id: 'activity-history', label: 'Lịch sử thao tác', path: ROUTES.DASHBOARD }],
   },
   {
     id: 'approvals',
@@ -101,12 +107,6 @@ export const navigationConfig: NavItem[] = [
       { id: 'apartment-report', label: 'Báo cáo căn hộ sử dụng', path: ROUTES.DASHBOARD },
       { id: 'data-stats', label: 'Thống kê dữ liệu', path: ROUTES.DASHBOARD },
     ],
-  },
-  {
-    id: 'settings',
-    label: 'Cài đặt',
-    icon: Settings,
-    children: [{ id: 'activity-history', label: 'Lịch sử thao tác', path: ROUTES.DASHBOARD }],
   },
   {
     id: 'accounting',
