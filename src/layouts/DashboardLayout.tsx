@@ -1,8 +1,6 @@
 import { DashboardHeader, DashboardSidebar, MobileMenuOverlay } from '@/components/layout';
-import { Button } from '@/components/ui';
 import { useAuth } from '@/hooks';
 import { cn } from '@/lib/utils';
-import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Outlet } from 'react-router';
 
@@ -15,8 +13,16 @@ export default function DashboardLayout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, logout } = useAuth();
 
+  const handleToggle = () => {
+    if (window.innerWidth < 1024) {
+      setMobileMenuOpen(!mobileMenuOpen);
+    } else {
+      setSidebarOpen(!sidebarOpen);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f4f7f9] text-gray-900">
       {/* Skip link for accessibility */}
       <a
         href="#main-content"
@@ -24,19 +30,6 @@ export default function DashboardLayout() {
       >
         Bỏ qua đến nội dung chính
       </a>
-
-      {/* Mobile menu button */}
-      <div className="fixed left-4 top-4 z-50 lg:hidden">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-expanded={mobileMenuOpen}
-          aria-label={mobileMenuOpen ? 'Đóng menu' : 'Mở menu'}
-        >
-          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
-      </div>
 
       {/* Sidebar */}
       <DashboardSidebar
@@ -50,12 +43,17 @@ export default function DashboardLayout() {
       <MobileMenuOverlay isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
 
       {/* Header */}
-      <DashboardHeader sidebarOpen={sidebarOpen} userName={user?.name} onLogout={logout} />
+      <DashboardHeader
+        sidebarOpen={sidebarOpen}
+        userName={user?.name}
+        onLogout={logout}
+        onToggleSidebar={handleToggle}
+      />
 
       {/* Main content */}
       <main
         id="main-content"
-        className={cn('pt-16 transition-all duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-16')}
+        className={cn('pt-16 transition-all duration-300', sidebarOpen ? 'lg:ml-72' : 'lg:ml-16')}
       >
         <div className="p-6">
           <Outlet />

@@ -8,6 +8,11 @@ const SettingsPage = lazy(() =>
 const DashboardPage = lazy(() =>
   import('@/features/dashboard').then((m) => ({ default: m.DashboardPage }))
 );
+const DepartmentListPage = lazy(() =>
+  import('@/features/company/pages/DepartmentListPage').then((m) => ({
+    default: m.DepartmentListPage,
+  }))
+);
 
 // Lazy load pages (non-feature)
 const Home = lazy(() => import('@/pages/Home'));
@@ -41,6 +46,7 @@ export const routes: RouteObject[] = [
             element: <DashboardLayout />,
             children: [
               { path: '/dashboard', element: <DashboardPage /> },
+              { path: '/company/departments', element: <DepartmentListPage /> },
               { path: '/settings', element: <SettingsPage /> },
             ],
           },
