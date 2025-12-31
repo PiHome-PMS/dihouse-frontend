@@ -7,6 +7,9 @@ export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
   DASHBOARD: '/dashboard',
+  COMPANY: {
+    DEPARTMENTS: '/company/departments',
+  },
 } as const;
 
 // Storage keys (for future use with cookies)

@@ -10,8 +10,8 @@ interface LogoProps {
  */
 export function Logo({ className, collapsed = false }: LogoProps) {
   return (
-    <div className={cn('text-xl font-bold text-brand-500', className)}>
-      {collapsed ? 'D' : 'DiHouse'}
+    <div className={cn('text-lg font-bold tracking-tight text-white uppercase', className)}>
+      {collapsed ? 'BC' : 'Building Care'}
     </div>
   );
 }

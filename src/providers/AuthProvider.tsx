@@ -1,4 +1,3 @@
-import { authApi } from '@/api';
 import type { LoginCredentials, User } from '@/types';
 import { type ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -26,47 +25,46 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Check existing session on mount
   useEffect(() => {
-    let cancelled = false;
-
-    const checkAuth = async () => {
+    const checkAuth = () => {
       try {
-        const response = await authApi.getMe();
-        if (!cancelled) {
-          setUser(response.data);
+        const storedUser = localStorage.getItem('auth_user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
         }
-      } catch {
-        // No valid session - that's ok
-        if (!cancelled) {
-          setUser(null);
-        }
+      } catch (error) {
+        console.error('Failed to parse stored user:', error);
+        localStorage.removeItem('auth_user');
       } finally {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       }
     };
 
     checkAuth();
-
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   const login = useCallback(async (credentials: LoginCredentials) => {
-    const response = await authApi.login(credentials);
-    setUser(response.data.user);
+    // Simulate API delay
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    if (credentials.email === 'admin@gmail.com' && credentials.password === '123456') {
+      const mockUser: User = {
+        id: '1',
+        email: 'admin@gmail.com',
+        name: 'Administrator',
+        role: 'admin',
+        permissions: ['admin:all'],
+        createdAt: new Date().toISOString(),
+      };
+      setUser(mockUser);
+      localStorage.setItem('auth_user', JSON.stringify(mockUser));
+    } else {
+      throw new Error('Email hoặc mật khẩu không chính xác');
+    }
   }, []);
 
   const logout = useCallback(async () => {
-    try {
-      await authApi.logout();
-    } catch (error) {
-      // Log error but still clear local state for security
-      console.error('Logout failed:', error);
-    } finally {
-      setUser(null);
-    }
+    setUser(null);
+    localStorage.removeItem('auth_user');
   }, []);
 
   // Memoize context value to prevent unnecessary re-renders
